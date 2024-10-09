@@ -63,7 +63,7 @@ class converter
 
             $response = [
                 'status' => 'success',
-                'convertedValues' => $convertedValues
+                'values' => $convertedValues
             ];
 
         } catch (Exception $e) {
