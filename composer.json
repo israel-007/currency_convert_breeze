@@ -1,5 +1,5 @@
 {
-    "name": "currency_converter/converter",
+    "name": "breeze_converter/currency",
     "description": "This PHP Currency Conversion Library allows you to easily convert between different currencies using real-time exchange rates from a specified API.",
     "type": "library",
     "license": "MIT",

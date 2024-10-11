@@ -10,7 +10,7 @@ class converter
     private $baseCurrency;
     private $targetCurrencies = [];
     private $amount;
-    private $cookieExpiry;
+    private $sessionExpiry;
 
     public function __construct($data = [])
     {
@@ -19,7 +19,7 @@ class converter
         }
 
         $this->baseCurrency = isset($data['basecurrency']) ? strtoupper($data['basecurrency']) : 'USD';  // Set baseCurrency, default to 'USD'
-        $this->cookieExpiry = isset($data['cookieexpiry']) ? $data['cookieexpiry'] : 300;  // Set cookieExpiry, default to 300 seconds
+        $this->sessionExpiry = isset($data['sessionexpiry']) ? $data['sessionexpiry'] : 300;  // Set sessionExpiry, default to 300 seconds
         $this->amount = isset($data['defaultamount']) && is_numeric($data['defaultamount']) && $data['defaultamount'] > 0 ? $data['defaultamount'] : 1;
     }
 
@@ -89,7 +89,7 @@ class converter
         // Check if exchange rates are already saved in a session
         if (isset($_SESSION["exchange_rates_{$currency}"])) {
             $sessionData = $_SESSION["exchange_rates_{$currency}"];
-            if (time() - $sessionData['timestamp'] < $this->cookieExpiry) {
+            if (time() - $sessionData['timestamp'] < $this->sessionExpiry) {
                 return $sessionData['rates'];
             } else {
                 unset($_SESSION["exchange_rates_{$currency}"]); // Expire session data if it's too old
@@ -167,7 +167,7 @@ class converter
 
     public function expiry(int $seconds)
     {
-        $this->cookieExpiry = $seconds;
+        $this->sessionExpiry = $seconds;
         return $this;
     }
 
